@@ -10,6 +10,7 @@ import RegistrationScene from '~/components/registrationScene';
 import WalletConnectScene from '~/components/walletConnectScene';
 import { pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import MainScene from '~/components/mainScnen';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +21,8 @@ export default function Home() {
   useEffect(() => {
     if (isConnected) {
       // todo - check if user has already onboarded
-      setPageStep(PAGE_STEPS.registration);
+      // setPageStep(PAGE_STEPS.registration);
+      setPageStep(PAGE_STEPS.main);
     } else {
       setPageStep(PAGE_STEPS.walletConnect);
     }
@@ -37,6 +39,7 @@ export default function Home() {
       >
         {pageStep === PAGE_STEPS.walletConnect && <WalletConnectScene />}
         {pageStep === PAGE_STEPS.registration && <RegistrationScene />}
+        {pageStep === PAGE_STEPS.main && <MainScene />}
       </Paper>
     </Container>
   );
