@@ -2,9 +2,8 @@
 import { useEffect } from 'react';
 
 import { Container, Paper } from '@mui/material';
-import { useAtom, useAtomValue } from 'jotai';
+import {  useAtomValue } from 'jotai';
 import { Inter } from 'next/font/google';
-import { useAccount } from 'wagmi';
 
 import ConfirmScene from '~/components/confirmScene';
 import LoadingScene from '~/components/loadingScene';
@@ -15,33 +14,39 @@ import SendScene from '~/components/sendScene';
 import WalletConnectScene from '~/components/walletConnectScene';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import LoadingFailedScene from '~/components/loadingScene/failed';
+import TestBox from '~/components/testbox';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const [pageStep, setPageStep] = useAtom(pageStepAtom);
+  const pageStep= useAtomValue(pageStepAtom);
 
   return (
+    <>
     <Container maxWidth="xs">
-      {/* <ConnectButton /> */}
       <Paper
         sx={{
           width: '100%',
           p: 2,
-          background:
-            'linear-gradient(180deg, rgba(147, 207, 255, 0.20) 0%, rgba(182, 223, 255, 0.14) 34.9%, rgba(255, 255, 255, 0.00) 100%), #F9F9F9',
+          background: pageStep === PAGE_STEPS.registration_failed 
+          ?  'linear-gradient(180deg, rgba(255, 0, 92, 0.20) 0%, rgba(255, 118, 192, 0.20) 50%, rgba(255, 255, 255, 0.00) 100%), #F9F9F9'
+          : 'linear-gradient(180deg, rgba(147, 207, 255, 0.20) 0%, rgba(182, 223, 255, 0.14) 34.9%, rgba(255, 255, 255, 0.00) 100%), #F9F9F9',
           boxShadow: '0px 5px 20px 3px rgba(0, 0, 0, 0.10)',
         }}
-      >
+        >
         {pageStep === PAGE_STEPS.walletConnect && <WalletConnectScene />}
         {pageStep === PAGE_STEPS.registration && <RegistrationScene />}
         {pageStep === PAGE_STEPS.registration_pending && <LoadingScene />}
         {pageStep === PAGE_STEPS.registration_done && <LoadingDoneScene />}
+        {pageStep === PAGE_STEPS.registration_failed && <LoadingFailedScene />}
         {pageStep === PAGE_STEPS.voiceVerification && <RegistrationScene />}
         {pageStep === PAGE_STEPS.main && <MainScene />}
         {pageStep === PAGE_STEPS.send && <SendScene />}
         {pageStep === PAGE_STEPS.confirm && <ConfirmScene />}
       </Paper>
     </Container>
+    <TestBox />
+    </>
   );
 }

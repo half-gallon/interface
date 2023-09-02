@@ -3,6 +3,7 @@ export enum PAGE_STEPS {
   registration,
   registration_pending,
   registration_done,
+  registration_failed,
   main,
   send,
   confirm,

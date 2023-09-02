@@ -1,10 +1,7 @@
-import { use, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
-import PersonIcon from '@mui/icons-material/Person';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import ReplayIcon from '@mui/icons-material/Replay';
 import StopIcon from '@mui/icons-material/Stop';
 import {
   Avatar,
@@ -38,8 +35,9 @@ const RegistrationScene = () => {
   const handleSubmit = () => {
     // todo progress
     setPageStep(PAGE_STEPS.registration_pending);
+    setIsVoiceOnboardingDone(true);
     return;
-    
+
     if (pageStep === PAGE_STEPS.registration) {
       setIsVoiceOnboardingDone(true);
       setPageStep(PAGE_STEPS.registration_pending);

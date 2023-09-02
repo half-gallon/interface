@@ -4,10 +4,10 @@ import { useSetAtom } from 'jotai';
 
 import { useInterval } from '~/hooks/useInterval';
 import { SceneLayout } from '~/layout';
-import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
+import { pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
-const LoadingDoneScene = () => {
+const LoadingFailedScene = () => {
   const setPageStep = useSetAtom(pageStepAtom);
   
   useInterval(() => {
@@ -35,10 +35,10 @@ const LoadingDoneScene = () => {
           mt: 4,
         }}
       >
-        Voice Authentication Complete
+        Voice Authentication Failed
       </Typography>
     </SceneLayout>
   );
 };
 
-export default LoadingDoneScene;
+export default LoadingFailedScene;
