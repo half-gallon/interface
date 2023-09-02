@@ -11,6 +11,11 @@ export function useSelectedAssetBalance({
 }: UseSelectedAssetBalanceProps) {
   const { address } = useAccount();
 
+  console.info({
+    address,
+    chainId,
+    token,
+  });
   return useBalance({
     address,
     chainId,

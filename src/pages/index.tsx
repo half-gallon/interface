@@ -7,6 +7,8 @@ import { Inter } from 'next/font/google';
 import { useAccount } from 'wagmi';
 
 import ConfirmScene from '~/components/confirmScene';
+import LoadingScene from '~/components/loadingScene';
+import LoadingDoneScene from '~/components/loadingScene/done';
 import MainScene from '~/components/mainScnen';
 import RegistrationScene from '~/components/registrationScene';
 import SendScene from '~/components/sendScene';
@@ -17,17 +19,7 @@ import { PAGE_STEPS } from '~/state/types';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const { isConnected } = useAccount();
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
-  const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
-
-  useEffect(() => {
-    if (isConnected) {
-      setPageStep(PAGE_STEPS.main);
-    } else {
-      setPageStep(PAGE_STEPS.walletConnect);
-    }
-  }, [setPageStep, isConnected, isVoiceOnboardingDone]);
 
   return (
     <Container maxWidth="xs">
@@ -36,10 +28,15 @@ export default function Home() {
         sx={{
           width: '100%',
           p: 2,
+          background:
+            'linear-gradient(180deg, rgba(147, 207, 255, 0.20) 0%, rgba(182, 223, 255, 0.14) 34.9%, rgba(255, 255, 255, 0.00) 100%), #F9F9F9',
+          boxShadow: '0px 5px 20px 3px rgba(0, 0, 0, 0.10)',
         }}
       >
         {pageStep === PAGE_STEPS.walletConnect && <WalletConnectScene />}
         {pageStep === PAGE_STEPS.registration && <RegistrationScene />}
+        {pageStep === PAGE_STEPS.registration_pending && <LoadingScene />}
+        {pageStep === PAGE_STEPS.registration_done && <LoadingDoneScene />}
         {pageStep === PAGE_STEPS.voiceVerification && <RegistrationScene />}
         {pageStep === PAGE_STEPS.main && <MainScene />}
         {pageStep === PAGE_STEPS.send && <SendScene />}

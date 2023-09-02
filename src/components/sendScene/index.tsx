@@ -20,6 +20,8 @@ import {
 import InputBase from '@mui/material/InputBase';
 import { useSetAtom } from 'jotai';
 
+import SceneHeader from '../sceneHeader';
+
 import AccountItem from './accountItem';
 import { SceneLayout } from '~/layout';
 import { pageStepAtom } from '~/state';
@@ -47,141 +49,93 @@ const SendScene = () => {
 
   return (
     <SceneLayout>
-      <Typography
-        component="h1"
-        align="center"
-        sx={{
-          mb: 8,
-        }}
-      >
-        You are sending
-      </Typography>
+      <SceneHeader title="You are sending" backTo={PAGE_STEPS.main} />
 
-      {sendToAddress === undefined ? (
-        <div>
-          <Box
+      <div>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography>Send to</Typography>
+          <Button onClick={handleClickSendCancel}>Cancel</Button>
+        </Box>
+        <TextField
+          sx={{
+            width: '100%',
+          }}
+          placeholder="address"
+        />
+
+        <Divider variant="middle" />
+
+        <Box sx={{ mt: 4, mb: 8 }}>
+          <Typography>Currency</Typography>
+          <Paper sx={{ p: 2, borderRadius: 4 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <AttachMoneyIcon sx={{ mr: 1 }} />
+              <Box>
+                <Typography>USDC</Typography>
+                <Typography>1000 USDC available</Typography>
+              </Box>
+            </Box>
+          </Paper>
+        </Box>
+
+        <Box>
+          <Typography>Amount</Typography>
+          <Paper
+            component="form"
             sx={{
+              px: 1,
+              py: 2,
               display: 'flex',
-              justifyContent: 'space-between',
               alignItems: 'center',
-            }}
-          >
-            <Typography>Send to</Typography>
-            <Button onClick={handleClickSendCancel}>Cancel</Button>
-          </Box>
-          <TextField
-            sx={{
               width: '100%',
             }}
-            placeholder="address"
-          />
-
-          <Box sx={{ mt: 4 }}>
-            <Typography sx={{ mb: 2 }}>Your Accounts</Typography>
-
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                gap: 1,
-              }}
-            >
-              <AccountItem
-                accountName="Account 1"
-                address="0x1234567890"
-                onClick={handleClickItem}
-              />
-              <AccountItem
-                accountName="Account 1"
-                address="0x1234567890"
-                onClick={handleClickItem}
-              />
-            </Box>
-          </Box>
-        </div>
-      ) : (
-        <div>
-          <Paper
-            sx={{ p: 2, display: 'flex', justifyContent: 'space-between' }}
           >
-            <Box>
-              <Typography>Account 1</Typography>
-              <Typography>0x1234567890</Typography>
-            </Box>
-
-            <Button color="error" variant="contained" onClick={handleClickBack}>
-              <CloseIcon />
+            <Button color="primary" variant="contained" size="small">
+              Max
             </Button>
+
+            <InputBase
+              sx={{ ml: 1, flex: 1, textAlign: 'right' }}
+              style={{ textAlign: 'right' }}
+              placeholder="input"
+              endAdornment={
+                <InputAdornment position="end">USDC</InputAdornment>
+              }
+            />
           </Paper>
+        </Box>
 
-          <Divider variant="middle" />
+        <Alert severity="info">
+          <AlertTitle>Info</AlertTitle>
+          In case of transaction over 1,000 USDC, Voice Verification is needed
+        </Alert>
 
-          <Box sx={{ mt: 4, mb: 8 }}>
-            <Typography>Currency</Typography>
-            <Paper sx={{ p: 2, borderRadius: 4 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <AttachMoneyIcon sx={{ mr: 1 }} />
-                <Box>
-                  <Typography>USDC</Typography>
-                  <Typography>1000 USDC available</Typography>
-                </Box>
-              </Box>
-            </Paper>
-          </Box>
-
-          <Box>
-            <Typography>Amount</Typography>
-            <Paper
-              component="form"
-              sx={{
-                px: 1,
-                py: 2,
-                display: 'flex',
-                alignItems: 'center',
-                width: '100%',
-              }}
-            >
-              <Button color="primary" variant="contained" size="small">
-                Max
-              </Button>
-
-              <InputBase
-                sx={{ ml: 1, flex: 1, textAlign: 'right' }}
-                style={{ textAlign: 'right' }}
-                placeholder="input"
-                endAdornment={
-                  <InputAdornment position="end">USDC</InputAdornment>
-                }
-              />
-            </Paper>
-          </Box>
-
-          <Alert severity="info">
-            <AlertTitle>Info</AlertTitle>
-            In case of transaction over 1,000 USDC, Voice Verification is needed
-          </Alert>
-
-          <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-            <Button
-              variant="contained"
-              color="error"
-              fullWidth
-              onClick={handleClickBack}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={handleClickConfirmRequest}
-            >
-              Next
-            </Button>
-          </Box>
-        </div>
-      )}
+        <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={handleClickBack}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleClickConfirmRequest}
+          >
+            Next
+          </Button>
+        </Box>
+      </div>
+      {/* )} */}
     </SceneLayout>
   );
 };

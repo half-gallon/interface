@@ -1,10 +1,10 @@
-import { use, useState } from 'react';
+import { use, useMemo, useState } from 'react';
 
-import PersonIcon from '@mui/icons-material/Person';
-import ReplayIcon from '@mui/icons-material/Replay';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
+import PersonIcon from '@mui/icons-material/Person';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ReplayIcon from '@mui/icons-material/Replay';
 import StopIcon from '@mui/icons-material/Stop';
 import {
   Avatar,
@@ -16,21 +16,33 @@ import {
 } from '@mui/material';
 import { useAtom, useSetAtom } from 'jotai';
 
+import SceneHeader from '../sceneHeader';
+
 import { useRecord } from '~/hooks/useRecord';
 import { SceneLayout } from '~/layout';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
 const RegistrationScene = () => {
-  const { getMicrophonePermission, startRecording,stopRecording, isRecording, audio, permission  } = useRecord();
+  const {
+    getMicrophonePermission,
+    startRecording,
+    stopRecording,
+    isRecording,
+    audio,
+    permission,
+  } = useRecord();
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const setIsVoiceOnboardingDone = useSetAtom(isVoiceOnboardingDoneAtom);
 
   const handleSubmit = () => {
     // todo progress
+    setPageStep(PAGE_STEPS.registration_pending);
+    return;
+    
     if (pageStep === PAGE_STEPS.registration) {
-      setPageStep(PAGE_STEPS.main);
       setIsVoiceOnboardingDone(true);
+      setPageStep(PAGE_STEPS.registration_pending);
     }
 
     if (pageStep === PAGE_STEPS.voiceVerification) {
@@ -43,21 +55,29 @@ const RegistrationScene = () => {
   };
 
   const handleStart = () => {
-    if(isRecording) {
+    if (isRecording) {
       stopRecording();
     } else {
       startRecording();
     }
-  }
+  };
+
+  const sceneTitle = useMemo(() => {
+    if (pageStep === PAGE_STEPS.registration) return 'Voice Training';
+    if (pageStep === PAGE_STEPS.voiceVerification) return 'Voice Verification';
+    return '';
+  }, [pageStep]);
+
+  const backTo = useMemo(() => {
+    if (pageStep === PAGE_STEPS.registration) return PAGE_STEPS.main;
+    if (pageStep === PAGE_STEPS.voiceVerification) return PAGE_STEPS.confirm;
+    return PAGE_STEPS.main;
+  }, [pageStep]);
 
   return (
     <SceneLayout>
-      <Box sx={{ mb: 8 }}>
-        <Typography align="center">
-          {pageStep === PAGE_STEPS.registration && 'Voice Training'}
-          {pageStep === PAGE_STEPS.voiceVerification && 'Voice Verification'}
-        </Typography>
-      </Box>
+      <SceneHeader title={sceneTitle} backTo={backTo} />
+
       <Typography
         sx={{
           fontSize: '1.5rem',
@@ -94,11 +114,10 @@ const RegistrationScene = () => {
           }}
         >
           {permission ? (
-          <IconButton onClick={handleStart}>
-            {isRecording ?   <StopIcon />: <MicIcon />}
-          </IconButton>
-
-          ): (
+            <IconButton onClick={handleStart}>
+              {isRecording ? <StopIcon /> : <MicIcon />}
+            </IconButton>
+          ) : (
             <IconButton onClick={handleClickMic}>
               <MicOffIcon />
             </IconButton>
@@ -106,7 +125,12 @@ const RegistrationScene = () => {
         </Box>
       </Paper>
 
-      <Button variant="contained" fullWidth onClick={handleSubmit} disabled={!audio}>
+      <Button
+        variant="contained"
+        fullWidth
+        onClick={handleSubmit}
+        disabled={!audio}
+      >
         Submit Recording
       </Button>
     </SceneLayout>

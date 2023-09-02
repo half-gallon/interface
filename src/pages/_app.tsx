@@ -1,4 +1,6 @@
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
+import { Bounce, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <Component {...pageProps} />
+              <ToastContainer transition={Bounce} position="bottom-left" />
             </ThemeProvider>
           </Hydrate>
         </QueryClientProvider>

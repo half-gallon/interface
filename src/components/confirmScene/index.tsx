@@ -14,6 +14,8 @@ import {
 } from '@mui/material';
 import { useAtom, useSetAtom } from 'jotai';
 
+import SceneHeader from '../sceneHeader';
+
 import AddressBox from './addressBox';
 import VerificationButton from './verificationButton';
 import { SceneLayout } from '~/layout';
@@ -42,32 +44,7 @@ const ConfirmScene = () => {
 
   return (
     <SceneLayout>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          alignItems: 'center',
-          position: 'relative',
-        }}
-      >
-        <IconButton
-          sx={{
-            justifySelf: 'flex-start',
-          }}
-          onClick={handleClickBack}
-        >
-          <ArrowBackIcon />
-        </IconButton>
-        <Typography
-          sx={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
-          Confirm Send
-        </Typography>
-      </Box>
+      <SceneHeader title="Confirm Send" backTo={PAGE_STEPS.send} />
 
       <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', mt: 4 }}>
         <AddressBox label="From" address={'0x1233'} />

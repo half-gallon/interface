@@ -3,7 +3,6 @@ import { useState } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, Box, Button, Divider, Typography } from '@mui/material';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useBalance } from 'wagmi';
 import { goerli } from 'wagmi/chains';
 
 import TransactionItem from './transactionItem';
@@ -74,18 +73,18 @@ const MainScene = () => {
             Voice registration
           </Button>
         )}
-        {isVoiceOnboardingDone &&
-          (data ? (
-            <Typography>{data.formatted} USDC</Typography>
-          ) : (
-            <Button onClick={handleGetFaucet} size="small">
-              Get Test Token
-            </Button>
-          ))}
+        {/* {isVoiceOnboardingDone && data && (
+          <Typography>{data.formatted} USDC</Typography>
+        )} */}
+        <Typography>1,000 USDC</Typography>
+        <Button onClick={handleGetFaucet} size="small">
+          Get Test Token
+        </Button>
       </Box>
       <Button
         variant="contained"
-        disabled={!data || !isVoiceOnboardingDone}
+        // disabled={!data || !isVoiceOnboardingDone}
+        disabled={!isVoiceOnboardingDone}
         fullWidth
         onClick={handleClickSend}
       >

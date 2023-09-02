@@ -10,5 +10,5 @@ export const TOKEN: {
 export const FAUCET: {
   [key in number]: Address;
 } = {
-  [goerli.id]: '0xca6b4c00831ffb77afe22e734a6101b268b7fcbe',
+  [goerli.id]: '0xe27658a36ca8a59fe5cc76a14bde34a51e587ab4',
 };
