@@ -9,5 +9,5 @@ export const isVoiceOnboardingDoneAtom = atom<boolean>(false);
 export const numberOfSendItemTestAtom = atom<number>(0);
 
 
-export const toAddressAtom = atom<Address | undefined>(undefined);
+export const toAddressAtom = atom<Address | undefined>('0xdcA2fF91E57d1703d62d09f8f83dD5F985fc1Dc5');
 export const sendAmountAtom = atom<string>('');

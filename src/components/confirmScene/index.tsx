@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -13,18 +13,23 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import SceneHeader from '../sceneHeader';
 
 import AddressBox from './addressBox';
 import VerificationButton from './verificationButton';
 import { Heading, Label, Numbers, SceneLayout, SubHeading } from '~/layout';
-import { numberOfSendItemTestAtom, pageStepAtom } from '~/state';
+import { numberOfSendItemTestAtom, pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import { useAccount } from 'wagmi';
 
 const ConfirmScene = () => {
+  const {address} = useAccount();
   const setPageStep = useSetAtom(pageStepAtom);
+  const toAddress = useAtomValue(toAddressAtom);
+  const sendAmount = useAtomValue(sendAmountAtom);
+
   const [numberOfSendItemTest, setNumberOfSendItemTest] = useAtom(
     numberOfSendItemTestAtom,
   );
@@ -62,7 +67,7 @@ const ConfirmScene = () => {
           gap: '16px',
         }}
       >
-        <AddressBox label="From" address={'0x1233'} />
+        <AddressBox label="From" address={address || `0x123`} />
         <Box
           sx={{
             display: 'flex',
@@ -84,12 +89,12 @@ const ConfirmScene = () => {
             }}
           />
         </Box>
-        <AddressBox label="To" address={'0x1233'} />
+        <AddressBox label="To" address={toAddress || '0x123'} />
       </Box>
 
       <Box sx={{ mt: 8 }}>
         <Label>Amount</Label>
-        <Numbers>1 USDC</Numbers>
+        <Numbers>{sendAmount} USDC</Numbers>
       </Box>
 
       <Divider sx={{ mx: 0, my: '24px', background: '#4465DA' }} />

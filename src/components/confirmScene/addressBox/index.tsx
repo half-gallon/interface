@@ -1,6 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 
 import { Label } from '~/layout';
+import { shortenAddress } from '~/utils';
 
 interface AddressBoxProps {
   label: string;
@@ -26,7 +27,7 @@ const AddressBox = ({ label, address }: AddressBoxProps) => {
             color: '#7A7A7A',
           }}
         >
-          {address}
+          {/* {shortenAddress(address)} */}
         </Typography>
       </Paper>
     </Box>

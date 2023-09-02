@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CloseIcon from '@mui/icons-material/Close';
@@ -20,7 +20,7 @@ import {
   styled,
 } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import Image from 'next/image';
 
 import SceneHeader from '../sceneHeader';
@@ -28,20 +28,27 @@ import SceneHeader from '../sceneHeader';
 import AccountItem from './accountItem';
 import UsdcPng from './usdc.png';
 import { Label, SceneLayout, SubHeading } from '~/layout';
-import { pageStepAtom } from '~/state';
+import { pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 import theme from '~/styles/theme';
+import { Address } from 'viem';
 
 const SendScene = () => {
-  const [sendToAddress, setSendToAddress] = useState<string | undefined>();
+  const [sendToAddress, setSendToAddress] = useAtom(toAddressAtom);
+  const [sendAmount, setSendAmount] = useAtom(sendAmountAtom);
   const setPageStep = useSetAtom(pageStepAtom);
 
-  const handleClickItem = () => {
-    setSendToAddress('0x1234567890');
+  const handleChangeInput = (e:  React.ChangeEvent<HTMLInputElement>) => {
+    setSendToAddress(e.target.value as Address);
+  };
+  const handleChangeAmount = (e:  React.ChangeEvent<HTMLInputElement>) => {
+    setSendAmount(e.target.value);
   };
 
   const handleClickBack = () => {
-    setSendToAddress(undefined);
+    // setSendToAddress(undefined);
+    setSendAmount('');
+    setPageStep(PAGE_STEPS.main);
   };
 
   const handleClickSendCancel = () => {
@@ -51,6 +58,8 @@ const SendScene = () => {
   const handleClickConfirmRequest = () => {
     setPageStep(PAGE_STEPS.confirm);
   };
+
+  const isNextDisabled = !sendToAddress || !sendAmount;
 
   return (
     <SceneLayout
@@ -77,6 +86,8 @@ const SendScene = () => {
           width: '100%',
         }}
         placeholder="Address"
+        value={sendToAddress}
+        onChange={handleChangeInput}
       />
 
       <Divider
@@ -160,6 +171,8 @@ const SendScene = () => {
             }}
             style={{ textAlign: 'right' }}
             placeholder="0"
+            onChange={handleChangeAmount}
+            value={sendAmount}
             endAdornment={
               <InputAdornment position="end">
                 <Typography
@@ -215,6 +228,7 @@ const SendScene = () => {
           color="primary"
           fullWidth
           onClick={handleClickConfirmRequest}
+          disabled={isNextDisabled}
         >
           Next
         </Button>

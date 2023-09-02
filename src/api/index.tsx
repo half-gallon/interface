@@ -14,9 +14,9 @@ export const uploadFile = async (blob: Blob) => {
         "Content-Type": "multipart/form-data",
     }
   }
-  // return await fetch(BASE_URL + '/upload', {
-  //   method: "POST",
-  //   body: formData,
-  // });
-  return await axios.post(BASE_URL + '/regUser',formData, axiosConfig);
+  return await fetch(BASE_URL + '/upload', {
+    method: "POST",
+    body: formData,
+  });
+  // return await axios.post(BASE_URL + '/regUser',formData, axiosConfig);
 }
