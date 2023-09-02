@@ -9,4 +9,6 @@ export enum PAGE_STEPS {
   send,
   confirm,
   voiceVerification,
+  voiceVerification_pending,
+  voiceVerification_done,
 }

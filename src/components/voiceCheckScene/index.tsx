@@ -23,7 +23,7 @@ import {  uploadFile } from '~/api';
 import { toast } from 'react-toastify';
 import { useMutation } from 'wagmi';
 
-const RegistrationScene = () => {
+const VoiceCheckScene = () => {
   const {
     getMicrophonePermission,
     startRecording,
@@ -41,6 +41,7 @@ const RegistrationScene = () => {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: uploadFile,
+ 
     onError(error, variables, context) {
       toast.error('Upload failed', (error as any).message);
     },
@@ -56,7 +57,7 @@ const RegistrationScene = () => {
       
       if (pageStep === PAGE_STEPS.voiceVerification) {
         setIsVoiceVerified(true);
-        setPageStep(PAGE_STEPS.confirm);
+        setPageStep(PAGE_STEPS.voiceVerification_pending);
       }
     },
   })
@@ -146,11 +147,11 @@ const RegistrationScene = () => {
           }}
         >
           {permission ? (
-            <IconButton onClick={handleStart} disabled={isProcessing}>
+            <IconButton onClick={handleStart} disabled={isProcessing || isLoading}>
               {isRecording ? <StopIcon /> : <MicIcon />}
             </IconButton>
           ) : (
-            <IconButton onClick={handleClickMic}>
+            <IconButton onClick={handleClickMic} disabled={isLoading}>
               <MicOffIcon />
             </IconButton>
           )}
@@ -179,4 +180,4 @@ const RegistrationScene = () => {
   );
 };
 
-export default RegistrationScene;
+export default VoiceCheckScene;

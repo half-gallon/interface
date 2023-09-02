@@ -17,7 +17,7 @@ import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 import dynamic from 'next/dynamic'
 
-const RegistrationScene = dynamic(() => import('~/components/registrationScene'), {
+const VoiceCheckScene = dynamic(() => import('~/components/voiceCheckScene'), {
     ssr: false
 })
 
@@ -41,13 +41,16 @@ export default function Home() {
         >
           {pageStep === PAGE_STEPS.walletConnect && <WalletConnectScene />}
           {pageStep === PAGE_STEPS.aaCreate && <AAcreateScene />}
-          {pageStep === PAGE_STEPS.registration && <RegistrationScene />}
+          {pageStep === PAGE_STEPS.registration && <VoiceCheckScene />}
           {pageStep === PAGE_STEPS.registration_pending && <LoadingScene />}
           {pageStep === PAGE_STEPS.registration_done && <LoadingDoneScene />}
           {pageStep === PAGE_STEPS.registration_failed && (
             <LoadingFailedScene />
           )}
-          {pageStep === PAGE_STEPS.voiceVerification && <RegistrationScene />}
+          
+          {pageStep === PAGE_STEPS.voiceVerification && <VoiceCheckScene />}
+          {pageStep === PAGE_STEPS.voiceVerification_pending && <LoadingScene />}
+          {pageStep === PAGE_STEPS.voiceVerification_done && <LoadingDoneScene />}
           {pageStep === PAGE_STEPS.main && <MainScene />}
           {pageStep === PAGE_STEPS.send && <SendScene />}
           {pageStep === PAGE_STEPS.confirm && <ConfirmScene />}

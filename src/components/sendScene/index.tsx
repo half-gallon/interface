@@ -27,17 +27,20 @@ import SceneHeader from '../sceneHeader';
 
 import AccountItem from './accountItem';
 import { Label, SceneLayout, SubHeading } from '~/layout';
-import { pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
+import { isVoiceVerifiedAtom, pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 import theme from '~/styles/theme';
 import { Address } from 'viem';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance, useNetwork } from 'wagmi';
+import { TOKEN } from '~/constants';
 
 const SendScene = () => {
   const {address} = useAccount();
   const [sendToAddress, setSendToAddress] = useAtom(toAddressAtom);
   const [sendAmount, setSendAmount] = useAtom(sendAmountAtom);
   const setPageStep = useSetAtom(pageStepAtom);
+  const setIsVoiceVerified = useSetAtom(isVoiceVerifiedAtom);
+  const {chain} = useNetwork();
 
   const handleChangeInput = (e:  React.ChangeEvent<HTMLInputElement>) => {
     setSendToAddress(e.target.value as Address);
@@ -47,12 +50,13 @@ const SendScene = () => {
   };
 
   const handleClickBack = () => {
-    // setSendToAddress(undefined);
+    setIsVoiceVerified(false);
     setSendAmount('');
     setPageStep(PAGE_STEPS.main);
   };
 
   const handleClickSendCancel = () => {
+    setIsVoiceVerified(false);
     setPageStep(PAGE_STEPS.main);
   };
 
@@ -62,9 +66,10 @@ const SendScene = () => {
 
   const { data } = useBalance({
     address,
-    token: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
-    chainId: 31337,
+    token: TOKEN[chain ? chain.id: 31337],
+    chainId: chain ? chain.id: 31337,
     watch: true,
+    enabled: chain !== undefined
 
   });
 

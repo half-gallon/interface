@@ -31,15 +31,16 @@ export const anvil = {
 } as const satisfies Chain;
 
 export const LOCAL_CHAIN = [anvil];
+type contractOnChain = {[key in number]: Address;}
 
-export const TOKEN: {
-  [key in number]: Address;
-} = {
-  [goerli.id]: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+export const TOKEN: contractOnChain = {
+  [anvil.id]: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
 };
 
-export const FAUCET: {
-  [key in number]: Address;
-} = {
+export const Verifier: contractOnChain = {
+  [anvil.id]: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
+}
+
+export const FAUCET: contractOnChain= {
   [goerli.id]: '0xe27658a36ca8a59fe5cc76a14bde34a51e587ab4',
 };

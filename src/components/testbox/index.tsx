@@ -1,11 +1,11 @@
-import { Box, Button } from '@mui/material';
-import { useSetAtom } from 'jotai';
+import { Box, Button, Typography } from '@mui/material';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
 const TestBox = () => {
-  const setPageStep = useSetAtom(pageStepAtom);
+  const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const handleChange = (page: PAGE_STEPS) => {
     setPageStep(page);
   };
@@ -19,6 +19,7 @@ const TestBox = () => {
         right: 0,
       }}
     >
+      <Typography>{PAGE_STEPS[pageStep]}</Typography>
       <Button onClick={() => handleChange(PAGE_STEPS.walletConnect)}>
         walletConnect
       </Button>

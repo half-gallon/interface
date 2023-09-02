@@ -8,7 +8,7 @@ import { goerli } from 'wagmi/chains';
 
 import TransactionItem from './transactionItem';
 import { TOKEN } from '~/constants';
-import { useGetUSDC } from '~/hooks/useGetUSDC';
+// import { useGetUSDC } from '~/hooks/useGetUSDC';
 import { useSelectedAssetBalance } from '~/hooks/useSelectedAssetBalance';
 import { Heading, SceneLayout, SubHeading } from '~/layout';
 import {
@@ -26,7 +26,7 @@ const MainScene = () => {
   const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
   const setPageStep = useSetAtom(pageStepAtom);
   const numberOfSendItemTest = useAtomValue(numberOfSendItemTestAtom);
-  const { handleGetUSDC } = useGetUSDC({});
+  // const { handleGetUSDC } = useGetUSDC({});
 
   const { data } = useSelectedAssetBalance({
     chainId: goerli.id,
@@ -34,7 +34,7 @@ const MainScene = () => {
   });
 
   const handleGetFaucet = () => {
-    handleGetUSDC();
+    // handleGetUSDC();
   };
 
   const handleOnboarding = () => {
