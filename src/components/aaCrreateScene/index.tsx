@@ -1,36 +1,22 @@
 import { useEffect } from 'react';
 
 import { Box, Button, Typography } from '@mui/material';
-import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAtom, useAtomValue } from 'jotai';
 import Image from 'next/image';
 import { useAccount } from 'wagmi';
 
 import Logo from './logo.png';
-import { SceneLayout } from '~/layout';
+import { Numbers, SceneLayout } from '~/layout';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
-const WalletConnectScene = () => {
+const AAcreateScene = () => {
   const { isConnected } = useAccount();
-  const { openConnectModal } = useConnectModal();
 
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
-  const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
-
-  useEffect(() => {
-    if (isConnected) {
-      // setPageStep(PAGE_STEPS.main);
-      setPageStep(PAGE_STEPS.aaCreate);
-    } else {
-      setPageStep(PAGE_STEPS.walletConnect);
-    }
-  }, [setPageStep, isConnected, isVoiceOnboardingDone]);
 
   const handleClickConnect = () => {
-    if (openConnectModal) {
-      openConnectModal();
-    }
+    setPageStep(PAGE_STEPS.main);
   };
 
   return (
@@ -43,7 +29,15 @@ const WalletConnectScene = () => {
         position: 'relative',
       }}
     >
-      <Image src={Logo} width={358} height={84} alt="logo" />
+      <Numbers
+        sx={{
+          textAlign: 'left',
+        }}
+      >
+        Create my
+        <br />
+        Abstract Account
+      </Numbers>
 
       <Button
         fullWidth
@@ -55,12 +49,11 @@ const WalletConnectScene = () => {
           right: 0,
         }}
         onClick={handleClickConnect}
-        disabled={!openConnectModal}
       >
-        connect wallet
+        Create wallet
       </Button>
     </SceneLayout>
   );
 };
 
-export default WalletConnectScene;
+export default AAcreateScene;

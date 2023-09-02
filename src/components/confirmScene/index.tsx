@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import PersonIcon from '@mui/icons-material/Person';
 import {
@@ -19,7 +19,7 @@ import SceneHeader from '../sceneHeader';
 
 import AddressBox from './addressBox';
 import VerificationButton from './verificationButton';
-import { Label, SceneLayout, SubHeading, Numbers, Heading } from '~/layout';
+import { Heading, Label, Numbers, SceneLayout, SubHeading } from '~/layout';
 import { numberOfSendItemTestAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
@@ -44,16 +44,24 @@ const ConfirmScene = () => {
   };
 
   return (
-    <SceneLayout sx={{
-      position: 'relative'
-    }}>
+    <SceneLayout
+      sx={{
+        position: 'relative',
+      }}
+    >
       <SceneHeader title="You are sending" backTo={PAGE_STEPS.send} />
 
-      <SubHeading>
-        Abstract
-      </SubHeading>
+      <SubHeading>Abstract</SubHeading>
 
-      <Box sx={{ display: 'flex', width: '100%', alignItems: 'flex-end', mt: 4,gap: '16px' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          alignItems: 'flex-end',
+          mt: 4,
+          gap: '16px',
+        }}
+      >
         <AddressBox label="From" address={'0x1233'} />
         <Box
           sx={{
@@ -70,10 +78,11 @@ const ConfirmScene = () => {
             aspectRatio: '1/1',
           }}
         >
-          <ChevronRightIcon sx={{
-            color: 'var(--primary, #4465DA)',
-
-          }}/>
+          <ChevronRightIcon
+            sx={{
+              color: 'var(--primary, #4465DA)',
+            }}
+          />
         </Box>
         <AddressBox label="To" address={'0x1233'} />
       </Box>
@@ -83,7 +92,7 @@ const ConfirmScene = () => {
         <Numbers>1 USDC</Numbers>
       </Box>
 
-      <Divider sx={{mx: 0, my: '24px', background: '#4465DA'}} />
+      <Divider sx={{ mx: 0, my: '24px', background: '#4465DA' }} />
 
       <Box>
         <Box>
@@ -104,14 +113,14 @@ const ConfirmScene = () => {
           />
         </Box>
       </Box>
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{ mt: 2, position: 'absolute', bottom: 0, }}
-          onClick={handleClickSend}
-        >
-          Send
-        </Button>
+      <Button
+        variant="contained"
+        fullWidth
+        sx={{ mt: 2, position: 'absolute', bottom: 0 }}
+        onClick={handleClickSend}
+      >
+        Send
+      </Button>
     </SceneLayout>
   );
 };
