@@ -137,21 +137,23 @@ const SendScene = () => {
                 endAdornment={
                   <InputAdornment position="end">USDC</InputAdornment>
                 }
-                
               />
             </Paper>
           </Box>
 
           <Alert severity="info">
-  <AlertTitle>Info</AlertTitle>
-  In case of transaction over 1,000 USDC, Voice Verification is needed
-</Alert>
-
+            <AlertTitle>Info</AlertTitle>
+            In case of transaction over 1,000 USDC, Voice Verification is needed
+          </Alert>
         </div>
       )}
-      <Box sx={{display:'flex', gap: 1, mt: 2}}>
-        <Button variant='contained' color='error' fullWidth>Cancel</Button>
-        <Button variant='contained' color='primary' fullWidth>Next</Button>
+      <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+        <Button variant="contained" color="error" fullWidth>
+          Cancel
+        </Button>
+        <Button variant="contained" color="primary" fullWidth>
+          Next
+        </Button>
       </Box>
     </SceneLayout>
   );
