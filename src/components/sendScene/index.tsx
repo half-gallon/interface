@@ -26,14 +26,15 @@ import Image from 'next/image';
 import SceneHeader from '../sceneHeader';
 
 import AccountItem from './accountItem';
-import UsdcPng from './usdc.png';
 import { Label, SceneLayout, SubHeading } from '~/layout';
 import { pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 import theme from '~/styles/theme';
 import { Address } from 'viem';
+import { useAccount, useBalance } from 'wagmi';
 
 const SendScene = () => {
+  const {address} = useAccount();
   const [sendToAddress, setSendToAddress] = useAtom(toAddressAtom);
   const [sendAmount, setSendAmount] = useAtom(sendAmountAtom);
   const setPageStep = useSetAtom(pageStepAtom);
@@ -58,6 +59,25 @@ const SendScene = () => {
   const handleClickConfirmRequest = () => {
     setPageStep(PAGE_STEPS.confirm);
   };
+
+  const { data } = useBalance({
+    address,
+    token: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    chainId: 31337,
+    watch: true,
+
+  });
+
+  const handleClickMax = () => {
+    if(data) {
+      setSendAmount(data.formatted)
+    } else {
+      setSendAmount('0')
+
+    }
+  }
+
+  console.info({data});
 
   const isNextDisabled = !sendToAddress || !sendAmount;
 
@@ -117,15 +137,8 @@ const SendScene = () => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Image
-              src={UsdcPng}
-              width={34}
-              height={34}
-              alt="usdc"
-              style={{ marginRight: '12px' }}
-            />
             <Box>
-              <SubHeading>USDC</SubHeading>
+              <SubHeading>$YAHO</SubHeading>
               {/* todo balance */}
               <Typography
                 sx={{
@@ -134,7 +147,7 @@ const SendScene = () => {
                   fontWeight: '400',
                 }}
               >
-                1000 USDC available
+                {data? data.formatted : '0'} YAHO available
               </Typography>
             </Box>
           </Box>
@@ -154,7 +167,7 @@ const SendScene = () => {
             background: 'rgba(68, 101, 218, 0.10)',
           }}
         >
-          <Button color="primary" variant="contained" size="small">
+          <Button color="primary" variant="contained" size="small" onClick={handleClickMax}>
             Max
           </Button>
 
@@ -182,7 +195,7 @@ const SendScene = () => {
                     fontWeight: '700',
                   }}
                 >
-                  USDC
+                  YAHO
                 </Typography>
               </InputAdornment>
             }
@@ -198,7 +211,7 @@ const SendScene = () => {
           color: 'var(--primary, #4465DA)',
         }}
       >
-        In case of transaction over 1,000 USDC,
+        In case of transaction over 1,000 YAHO,
         <br />
         Voice Verification is needed
       </Typography>

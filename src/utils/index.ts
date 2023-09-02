@@ -1,5 +1,4 @@
 import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { isAddress } from "viem";
 
 const ffmpeg = new FFmpeg();
 
@@ -28,7 +27,5 @@ export async function convertWebmToWav(webmBlob: Blob): Promise<Blob> {
 export const shortenAddress = (address?: string, size: number = 4) => {
   if(address === undefined) return '';
 
- return  `${address.substring(0, 2 + size)}...${address.substring(
-    address.length - size,
-    )}`;
-  }
+  return  `${address.substring(0, 2 + size)}...${address.substring(address.length - size)}`;
+}

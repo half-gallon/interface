@@ -13,10 +13,11 @@ import { publicProvider } from 'wagmi/providers/public';
 import '../styles/globals.css';
 
 import theme from '~/styles/theme';
-import { CHAIN } from '~/constants';
+import { CHAIN, LOCAL_CHAIN } from '~/constants';
 
 const { chains, publicClient } = configureChains(
-  [...CHAIN],
+  // [...CHAIN],
+  [...LOCAL_CHAIN],
   [publicProvider()],
 );
 

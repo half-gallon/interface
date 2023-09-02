@@ -20,7 +20,7 @@ import SceneHeader from '../sceneHeader';
 import AddressBox from './addressBox';
 import VerificationButton from './verificationButton';
 import { Heading, Label, Numbers, SceneLayout, SubHeading } from '~/layout';
-import { numberOfSendItemTestAtom, pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
+import { isVoiceVerifiedAtom, numberOfSendItemTestAtom, pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 import { useAccount } from 'wagmi';
 
@@ -29,6 +29,7 @@ const ConfirmScene = () => {
   const setPageStep = useSetAtom(pageStepAtom);
   const toAddress = useAtomValue(toAddressAtom);
   const sendAmount = useAtomValue(sendAmountAtom);
+  const isVoiceVerified = useAtomValue(isVoiceVerifiedAtom);
 
   const [numberOfSendItemTest, setNumberOfSendItemTest] = useAtom(
     numberOfSendItemTestAtom,
@@ -61,6 +62,7 @@ const ConfirmScene = () => {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
           width: '100%',
           alignItems: 'flex-end',
           mt: 4,
@@ -68,33 +70,12 @@ const ConfirmScene = () => {
         }}
       >
         <AddressBox label="From" address={address || `0x123`} />
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(68, 101, 218, 0.10)',
-            width: '32px',
-            height: '32px',
-            borderRadius: '50%',
-            p: 1,
-            m: 1,
-            flexShrink: 0,
-            aspectRatio: '1/1',
-          }}
-        >
-          <ChevronRightIcon
-            sx={{
-              color: 'var(--primary, #4465DA)',
-            }}
-          />
-        </Box>
         <AddressBox label="To" address={toAddress || '0x123'} />
       </Box>
 
       <Box sx={{ mt: 8 }}>
         <Label>Amount</Label>
-        <Numbers>{sendAmount} USDC</Numbers>
+        <Numbers>{sendAmount} YAHO</Numbers>
       </Box>
 
       <Divider sx={{ mx: 0, my: '24px', background: '#4465DA' }} />
@@ -103,7 +84,7 @@ const ConfirmScene = () => {
         <Box>
           <Heading>Additional steps needed</Heading>
           <Typography variant="caption">
-            In case of transaction over 1,000 USDC, Voice Verification is needed
+            In case of transaction over 1,000 YAHO, Voice Verification is needed
           </Typography>
         </Box>
 
@@ -111,10 +92,12 @@ const ConfirmScene = () => {
           <VerificationButton
             label="Voice verification"
             onClick={handleClickVoiceVerification}
+            isVerified={isVoiceVerified}
           />
           <VerificationButton
             label="Conformation"
             onClick={handleClickConfirmation}
+            // isVerified={isVoiceVerified}
           />
         </Box>
       </Box>

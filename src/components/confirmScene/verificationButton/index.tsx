@@ -20,6 +20,7 @@ const VerificationButton = ({
         justifyContent: 'space-between',
       }}
       onClick={onClick}
+      disabled={isVerified}
     >
       {label}
       {isVerified && <CheckCircleIcon />}

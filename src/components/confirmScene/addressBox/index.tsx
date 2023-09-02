@@ -27,6 +27,7 @@ const AddressBox = ({ label, address }: AddressBoxProps) => {
             color: '#7A7A7A',
           }}
         >
+          {address}
           {/* {shortenAddress(address)} */}
         </Typography>
       </Paper>

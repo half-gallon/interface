@@ -17,10 +17,11 @@ import SceneHeader from '../sceneHeader';
 
 import { useRecord } from '~/hooks/useRecord';
 import { Description, Heading, SceneLayout } from '~/layout';
-import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
+import { isVoiceOnboardingDoneAtom, isVoiceVerifiedAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
-import { uploadFile } from '~/api';
+import {  uploadFile } from '~/api';
 import { toast } from 'react-toastify';
+import { useMutation } from 'wagmi';
 
 const RegistrationScene = () => {
   const {
@@ -35,26 +36,36 @@ const RegistrationScene = () => {
   } = useRecord();
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const setIsVoiceOnboardingDone = useSetAtom(isVoiceOnboardingDoneAtom);
+  const setIsVoiceVerified = useSetAtom(isVoiceVerifiedAtom);
+  const setProof = useSetAtom(isVoiceVerifiedAtom);
 
-  const handleSubmit = async () => {
-    try {
-      console.info('wavBlob', wavBlob);
-      if(wavBlob !==undefined) {
-        const res = await uploadFile(wavBlob);
-        console.info({res});
-      }
-      // todo progress
-      setPageStep(PAGE_STEPS.registration_pending);
-      setIsVoiceOnboardingDone(true);
-      return;
-      
+  const { mutate, isLoading } = useMutation({
+    mutationFn: uploadFile,
+    onError(error, variables, context) {
+      toast.error('Upload failed', (error as any).message);
+    },
+    onSuccess(data) {
+      toast.success('Upload success');
+      const proof = (data as any).proof;
+      setProof(proof);
+
       if (pageStep === PAGE_STEPS.registration) {
         setIsVoiceOnboardingDone(true);
         setPageStep(PAGE_STEPS.registration_pending);
       }
       
       if (pageStep === PAGE_STEPS.voiceVerification) {
+        setIsVoiceVerified(true);
         setPageStep(PAGE_STEPS.confirm);
+      }
+    },
+  })
+
+  const handleSubmit = async () => {
+    try {
+      console.info('wavBlob', wavBlob);
+      if(wavBlob !==undefined) {
+        mutate(wavBlob);
       }
     } catch (error: any) {
       toast.error('Upload failed', error.message);
@@ -121,6 +132,9 @@ const RegistrationScene = () => {
         {audio ? (
           <Box>
             <audio src={audio} controls></audio>
+            {/* <a download={audio} href={audio}>
+              download
+            </a> */}
           </Box>
         ) : null}
 
@@ -143,11 +157,15 @@ const RegistrationScene = () => {
         </Box>
       </Paper>
 
+      <Typography variant='caption'>
+        *Demo utilizes the model that have been already trained
+      </Typography>
+
       <Button
         variant="contained"
         fullWidth
         onClick={handleSubmit}
-        disabled={!audio}
+        disabled={!audio || isLoading}
         sx={{
           position: 'absolute',
           bottom: 0,
@@ -155,7 +173,7 @@ const RegistrationScene = () => {
           right: 0,
         }}
       >
-        Submit Recording
+        {isLoading ? 'Uploading...' : 'Submit Recording'}
       </Button>
     </SceneLayout>
   );

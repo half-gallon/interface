@@ -28,7 +28,7 @@ const TransactionItem = ({ type }: TransactionItemProps) => {
         </Box>
         <Box>
           <Typography>{type === 'receive' ? 'Received' : 'Sent'}</Typography>
-          <Typography>{'100000 USDC'}</Typography>
+          <Typography>{'100000 YAHO'}</Typography>
         </Box>
       </Box>
 
