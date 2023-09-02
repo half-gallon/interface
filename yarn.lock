@@ -487,12 +487,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ffmpeg/ffmpeg@npm:^0.12.6":
-  version: 0.12.6
-  resolution: "@ffmpeg/ffmpeg@npm:0.12.6"
+"@ffmpeg/ffmpeg@npm:0.12.1":
+  version: 0.12.1
+  resolution: "@ffmpeg/ffmpeg@npm:0.12.1"
   dependencies:
     "@ffmpeg/types": ^0.12.0
-  checksum: 81c01634f10d8c62690cf4680175d3e5d2b85abd0b390e6b909de18270f1a764a314121704263a84de82bd410ba6f560414a380820356bd3bbc55e1f5df3b04a
+  checksum: 70488419a284c2b93b7ea630e28b8872799238a0d9c5a69b2594e7a2ee039175e9230b473ab294f5d4b5347d5c6ea8f809b96149fffa7b3496ba7290d49b3eb6
   languageName: node
   linkType: hard
 
@@ -500,6 +500,13 @@ __metadata:
   version: 0.12.1
   resolution: "@ffmpeg/types@npm:0.12.1"
   checksum: e83739687213f0ee96eb57d7279cf284abb3cb1c0868d53889d6b52e701ed6ddc6d62a7e24f47f19df4e7b9b6eeb981e7e87596c85e6c53cd7938cc036e1101d
+  languageName: node
+  linkType: hard
+
+"@ffmpeg/util@npm:^0.12.0":
+  version: 0.12.1
+  resolution: "@ffmpeg/util@npm:0.12.1"
+  checksum: 6de17789a3cbe912fec2ae1e5c0b710fb68a0a668789311bce8967f8468b0dd64335b96144eea71800fa8729d27468e0d54e4c8ef9c7fc35a99590116d3074f9
   languageName: node
   linkType: hard
 
@@ -6079,7 +6086,8 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
-    "@ffmpeg/ffmpeg": ^0.12.6
+    "@ffmpeg/ffmpeg": 0.12.1
+    "@ffmpeg/util": ^0.12.0
     "@metamask/providers": ^11.1.1
     "@metamask/sdk": ^0.6.0
     "@mui/icons-material": ^5.14.7

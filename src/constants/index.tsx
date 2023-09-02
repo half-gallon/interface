@@ -23,8 +23,8 @@ export const anvil = {
     symbol: 'MITO',
   },
   rpcUrls: {
-    public: { http: ['http://192.168.0.105:8545'] },
-    default: { http: ['http://192.168.0.105:8545'] },
+    public: { http: ['http://192.168.50.45:8545'] },
+    default: { http: ['http://192.168.50.45:8545'] },
   },
   
   contracts: {},

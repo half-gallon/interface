@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = '';
+const BASE_URL = 'http://192.168.50.243:6000';
 
 export const uploadFile = async (blob: Blob) => {
   const timestamp = Math.floor(Date.now() / 1000);

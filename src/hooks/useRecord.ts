@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { convertWebmToWav } from '~/utils';
 
 const mimeType = 'audio/webm';
 
@@ -10,6 +11,8 @@ export function useRecord() {
   const [audio, setAudio] = useState<string>();
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [wavBlob, setWavBlob] = useState<Blob | undefined>();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     getMicrophonePermission;
@@ -54,20 +57,31 @@ export function useRecord() {
     setIsRecording(true);
   };
 
-  const stopRecording = () => {
-    setRecordingStatus('inactive');
-    if (mediaRecorder.current === undefined) return;
-
-    mediaRecorder.current.stop();
-    mediaRecorder.current.onstop = () => {
-      const audioBlob = new Blob(audioChunks, { type: mimeType });
-      const audioUrl = URL.createObjectURL(audioBlob);
-
-      setAudio(audioUrl);
-
-      setAudioChunks([]);
-      setIsRecording(false);
-    };
+  const stopRecording = async () => {
+    try {
+      setIsProcessing(true);
+      setRecordingStatus('inactive');
+      if (mediaRecorder.current === undefined) return;
+      
+      mediaRecorder.current.stop();
+      mediaRecorder.current.onstop = async () => {
+        const audioBlob = new Blob(audioChunks, { type: mimeType });
+        
+        const wavBlob = await convertWebmToWav(audioBlob);
+        setWavBlob(wavBlob);
+        // const audioUrl = URL.createObjectURL(audioBlob);
+        const audioUrl = URL.createObjectURL(wavBlob);
+        
+        setAudio(audioUrl);
+        
+        setAudioChunks([]);
+        setIsRecording(false);
+      };
+    } catch(e) {
+      console.error(e);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return {
@@ -77,5 +91,7 @@ export function useRecord() {
     isRecording,
     audio,
     permission,
+    wavBlob,
+    isProcessing,
   };
 }

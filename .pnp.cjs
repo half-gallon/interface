@@ -184,10 +184,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "@ffmpeg/ffmpeg",\
-        "npm:0.12.6"\
+        "npm:0.12.1"\
       ],\
       [\
         "@ffmpeg/types",\
+        "npm:0.12.1"\
+      ],\
+      [\
+        "@ffmpeg/util",\
         "npm:0.12.1"\
       ],\
       [\
@@ -3103,7 +3107,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@emotion/react", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:11.11.1"],\
             ["@emotion/styled", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:11.11.0"],\
-            ["@ffmpeg/ffmpeg", "npm:0.12.6"],\
+            ["@ffmpeg/ffmpeg", "npm:0.12.1"],\
+            ["@ffmpeg/util", "npm:0.12.1"],\
             ["@metamask/providers", "npm:11.1.1"],\
             ["@metamask/sdk", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:0.6.0"],\
             ["@mui/icons-material", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:5.14.7"],\
@@ -3765,10 +3770,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@ffmpeg/ffmpeg", [\
-        ["npm:0.12.6", {\
-          "packageLocation": "./.yarn/cache/@ffmpeg-ffmpeg-npm-0.12.6-17be683ced-81c01634f1.zip/node_modules/@ffmpeg/ffmpeg/",\
+        ["npm:0.12.1", {\
+          "packageLocation": "./.yarn/cache/@ffmpeg-ffmpeg-npm-0.12.1-30c336ee91-70488419a2.zip/node_modules/@ffmpeg/ffmpeg/",\
           "packageDependencies": [\
-            ["@ffmpeg/ffmpeg", "npm:0.12.6"],\
+            ["@ffmpeg/ffmpeg", "npm:0.12.1"],\
             ["@ffmpeg/types", "npm:0.12.1"]\
           ],\
           "linkType": "HARD"\
@@ -3779,6 +3784,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@ffmpeg-types-npm-0.12.1-138c65938e-e837396872.zip/node_modules/@ffmpeg/types/",\
           "packageDependencies": [\
             ["@ffmpeg/types", "npm:0.12.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@ffmpeg/util", [\
+        ["npm:0.12.1", {\
+          "packageLocation": "./.yarn/cache/@ffmpeg-util-npm-0.12.1-f6f14a29c4-6de17789a3.zip/node_modules/@ffmpeg/util/",\
+          "packageDependencies": [\
+            ["@ffmpeg/util", "npm:0.12.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10609,7 +10623,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next-evm-template", "workspace:."],\
             ["@emotion/react", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:11.11.1"],\
             ["@emotion/styled", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:11.11.0"],\
-            ["@ffmpeg/ffmpeg", "npm:0.12.6"],\
+            ["@ffmpeg/ffmpeg", "npm:0.12.1"],\
+            ["@ffmpeg/util", "npm:0.12.1"],\
             ["@metamask/providers", "npm:11.1.1"],\
             ["@metamask/sdk", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:0.6.0"],\
             ["@mui/icons-material", "virtual:bffdcb0c4b852d66d5ead61fc57452a41a72757cac978c7574fb18164416105e1060fad08265fc5d3288dfa29b2864269abeafafd1af2802eeb70965ccd49d74#npm:5.14.7"],\

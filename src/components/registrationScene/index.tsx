@@ -30,15 +30,19 @@ const RegistrationScene = () => {
     isRecording,
     audio,
     permission,
+    wavBlob,
+    isProcessing,
   } = useRecord();
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const setIsVoiceOnboardingDone = useSetAtom(isVoiceOnboardingDoneAtom);
 
   const handleSubmit = async () => {
     try {
-      // if(wavBlob !==undefined) {
-      //   await uploadFile(wavBlob);
-      // }
+      console.info('wavBlob', wavBlob);
+      if(wavBlob !==undefined) {
+        const res = await uploadFile(wavBlob);
+        console.info({res});
+      }
       // todo progress
       setPageStep(PAGE_STEPS.registration_pending);
       setIsVoiceOnboardingDone(true);
@@ -128,7 +132,7 @@ const RegistrationScene = () => {
           }}
         >
           {permission ? (
-            <IconButton onClick={handleStart}>
+            <IconButton onClick={handleStart} disabled={isProcessing}>
               {isRecording ? <StopIcon /> : <MicIcon />}
             </IconButton>
           ) : (

@@ -20,15 +20,15 @@ const { chains, publicClient } = configureChains(
   [publicProvider()],
 );
 
-const { connectors } = getDefaultWallets({
-  appName: 'Test App',
-  projectId: 'YOUR_PROJECT_ID',
-  chains,
-});
+// const { connectors } = getDefaultWallets({
+//   appName: 'Test App',
+//   projectId: 'YOUR_PROJECT_ID',
+//   chains,
+// });
 
 const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors,
+  // connectors,
   publicClient,
 });
 

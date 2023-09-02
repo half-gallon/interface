@@ -45,8 +45,6 @@ const MainScene = () => {
     setPageStep(PAGE_STEPS.send);
   };
 
-  console.info(data);
-
   return (
     <SceneLayout
       sx={{
