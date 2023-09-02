@@ -9,6 +9,7 @@ import { pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
 const RegistrationScene = () => {
+
   return (
     <SceneLayout>
       <Box

@@ -5,12 +5,28 @@ import { Avatar, Box, Button, Divider, Typography } from '@mui/material';
 
 import TransactionItem from './transactionItem';
 import { SceneLayout } from '~/layout';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { isVoiceOnboardingDoneAtom, numberOfSendItemTestAtom, pageStepAtom } from '~/state';
+import { PAGE_STEPS } from '~/state/types';
 
 const MainScene = () => {
-  const [hasBalance, setHasBalance] = useState<boolean>(false);
+  const [hasBalance, setHasBalance] = useState<boolean>(true);
+  const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
+  const setPageStep = useSetAtom(pageStepAtom);
+  const numberOfSendItemTest = useAtomValue(numberOfSendItemTestAtom);
+
   const handleGetFaucet = () => {
     setHasBalance(true);
   };
+
+  const handleOnboarding = () => {
+    setPageStep(PAGE_STEPS.registration);
+  };
+
+  const handleClickSend = () => {
+    setPageStep(PAGE_STEPS.send);
+  }
+
   return (
     <SceneLayout
       sx={{
@@ -37,15 +53,20 @@ const MainScene = () => {
         >
           <PersonIcon />
         </Avatar>
-        {hasBalance ? (
+        {!isVoiceOnboardingDone && (
+          <Button onClick={handleOnboarding} size="small" >
+            Voice registration
+          </Button>
+        )}
+        {isVoiceOnboardingDone && (hasBalance ? (
           <Typography>1,000 USDC</Typography>
         ) : (
           <Button onClick={handleGetFaucet} size="small">
             Get Test Token
           </Button>
-        )}
+        ))}
       </Box>
-      <Button variant="contained" disabled={!hasBalance} fullWidth>
+      <Button variant="contained" disabled={!hasBalance || !isVoiceOnboardingDone} fullWidth onClick={handleClickSend}>
         Send
       </Button>
 
@@ -68,9 +89,15 @@ const MainScene = () => {
         <Box
           sx={{
             width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
           }}
         >
           {hasBalance && <TransactionItem type="receive" />}
+          {Array.from(Array(numberOfSendItemTest).keys()).map((i) => (
+            <TransactionItem type="send" key={i}/>
+          )) }
         </Box>
       </Box>
     </SceneLayout>

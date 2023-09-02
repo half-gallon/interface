@@ -21,13 +21,29 @@ import InputBase from '@mui/material/InputBase';
 
 import AccountItem from './accountItem';
 import { SceneLayout } from '~/layout';
+import { useSetAtom } from 'jotai';
+import { pageStepAtom } from '~/state';
+import { PAGE_STEPS } from '~/state/types';
 
 const SendScene = () => {
   const [sendToAddress, setSendToAddress] = useState<string | undefined>();
-
+  const setPageStep = useSetAtom(pageStepAtom);
+  
   const handleClickItem = () => {
     setSendToAddress('0x1234567890');
   };
+
+  const handleClickBack = () => {
+    setSendToAddress(undefined);
+  }
+
+  const handleClickSendCancel = () => {
+    setPageStep(PAGE_STEPS.main);
+  }
+
+  const handleClickConfirmRequest = () => {
+    setPageStep(PAGE_STEPS.confirm);
+  } 
 
   return (
     <SceneLayout>
@@ -51,7 +67,7 @@ const SendScene = () => {
             }}
           >
             <Typography>Send to</Typography>
-            <Button>Cancel</Button>
+            <Button onClick={handleClickSendCancel}>Cancel</Button>
           </Box>
           <TextField
             sx={{
@@ -145,16 +161,17 @@ const SendScene = () => {
             <AlertTitle>Info</AlertTitle>
             In case of transaction over 1,000 USDC, Voice Verification is needed
           </Alert>
+
+          <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+            <Button variant="contained" color="error" fullWidth onClick={handleClickBack}>
+              Cancel
+            </Button>
+            <Button variant="contained" color="primary" fullWidth onClick={handleClickConfirmRequest}>
+              Next
+            </Button>
+          </Box>
         </div>
       )}
-      <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-        <Button variant="contained" color="error" fullWidth>
-          Cancel
-        </Button>
-        <Button variant="contained" color="primary" fullWidth>
-          Next
-        </Button>
-      </Box>
     </SceneLayout>
   );
 };

@@ -3,4 +3,6 @@ export enum PAGE_STEPS {
   registration,
   main,
   send,
+  confirm,
+  voiceVerification,
 }

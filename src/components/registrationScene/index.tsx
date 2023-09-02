@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 import MicIcon from '@mui/icons-material/Mic';
 import PersonIcon from '@mui/icons-material/Person';
@@ -11,15 +11,42 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 
 import { SceneLayout } from '~/layout';
-import { pageStepAtom } from '~/state';
+import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
 const RegistrationScene = () => {
+  const [pageStep, setPageStep] = useAtom(pageStepAtom);
+  const setIsVoiceOnboardingDone = useSetAtom(isVoiceOnboardingDoneAtom);
+
+  const handleSubmit = () => {
+    // todo progress
+    if(pageStep === PAGE_STEPS.registration) {
+      setPageStep(PAGE_STEPS.main);
+      setIsVoiceOnboardingDone(true);
+    }
+
+    if(pageStep === PAGE_STEPS.voiceVerification) {
+      setPageStep(PAGE_STEPS.confirm);
+    }
+  }
+
+
   return (
     <SceneLayout>
+      <Box sx={{mb: 8}}>
+        <Typography align='center'>
+        {pageStep === PAGE_STEPS.registration && (
+          
+          'Voice Training'
+          )}
+          {pageStep === PAGE_STEPS.voiceVerification && (
+          'Voice Verification'
+          )}
+        </Typography>
+      </Box>
       <Typography
         sx={{
           fontSize: '1.5rem',
@@ -30,7 +57,7 @@ const RegistrationScene = () => {
 
       <Paper
         sx={{
-          p: 4,
+        p: 4,
         }}
       >
         <Paper
@@ -55,7 +82,7 @@ const RegistrationScene = () => {
         </Box>
       </Paper>
 
-      <Button variant="contained" fullWidth>
+      <Button variant="contained" fullWidth onClick={handleSubmit}>
         Submit Recording
       </Button>
     </SceneLayout>
