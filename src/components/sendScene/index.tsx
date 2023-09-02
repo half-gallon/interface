@@ -110,7 +110,7 @@ const SendScene = () => {
               <Typography>0x1234567890</Typography>
             </Box>
 
-            <Button color="error" variant="contained">
+            <Button color="error" variant="contained" onClick={handleClickBack}>
               <CloseIcon />
             </Button>
           </Paper>
