@@ -4,18 +4,16 @@ import { Box, Button, Typography } from '@mui/material';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAtom, useAtomValue } from 'jotai';
 import Image from 'next/image';
-import { useAccount, useSwitchNetwork } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import Logo from './logo.png';
 import { SceneLayout } from '~/layout';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
-import { CHAIN } from '~/constants';
 
 const WalletConnectScene = () => {
   const { isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
-  const { switchNetwork } = useSwitchNetwork();
 
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
@@ -24,13 +22,10 @@ const WalletConnectScene = () => {
     if (isConnected) {
       // setPageStep(PAGE_STEPS.main);
       setPageStep(PAGE_STEPS.aaCreate);
-      if(switchNetwork) {
-        switchNetwork(CHAIN[0].id);
-      }
     } else {
       setPageStep(PAGE_STEPS.walletConnect);
     }
-  }, [setPageStep, isConnected, isVoiceOnboardingDone, switchNetwork]);
+  }, [setPageStep, isConnected, isVoiceOnboardingDone]);
 
   const handleClickConnect = async () => {
     if (openConnectModal) {
