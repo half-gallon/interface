@@ -6,13 +6,13 @@ import { useAtom, useAtomValue } from 'jotai';
 import { Inter } from 'next/font/google';
 import { useAccount } from 'wagmi';
 
+import ConfirmScene from '~/components/confirmScene';
 import MainScene from '~/components/mainScnen';
 import RegistrationScene from '~/components/registrationScene';
 import SendScene from '~/components/sendScene';
 import WalletConnectScene from '~/components/walletConnectScene';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
-import ConfirmScene from '~/components/confirmScene';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isConnected) {
-        setPageStep(PAGE_STEPS.main);
+      setPageStep(PAGE_STEPS.main);
     } else {
       setPageStep(PAGE_STEPS.walletConnect);
     }

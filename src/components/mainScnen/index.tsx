@@ -2,21 +2,35 @@ import { useState } from 'react';
 
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, Box, Button, Divider, Typography } from '@mui/material';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useBalance } from 'wagmi';
+import { goerli } from 'wagmi/chains';
 
 import TransactionItem from './transactionItem';
+import { TOKEN } from '~/constants';
+import { useGetUSDC } from '~/hooks/useGetUSDC';
+import { useSelectedAssetBalance } from '~/hooks/useSelectedAssetBalance';
 import { SceneLayout } from '~/layout';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { isVoiceOnboardingDoneAtom, numberOfSendItemTestAtom, pageStepAtom } from '~/state';
+import {
+  isVoiceOnboardingDoneAtom,
+  numberOfSendItemTestAtom,
+  pageStepAtom,
+} from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
 const MainScene = () => {
-  const [hasBalance, setHasBalance] = useState<boolean>(true);
   const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
   const setPageStep = useSetAtom(pageStepAtom);
   const numberOfSendItemTest = useAtomValue(numberOfSendItemTestAtom);
+  const { handleGetUSDC } = useGetUSDC({});
+
+  const { data } = useSelectedAssetBalance({
+    chainId: goerli.id,
+    token: TOKEN[goerli.id],
+  });
 
   const handleGetFaucet = () => {
-    setHasBalance(true);
+    handleGetUSDC();
   };
 
   const handleOnboarding = () => {
@@ -25,7 +39,9 @@ const MainScene = () => {
 
   const handleClickSend = () => {
     setPageStep(PAGE_STEPS.send);
-  }
+  };
+
+  console.info(data);
 
   return (
     <SceneLayout
@@ -54,19 +70,25 @@ const MainScene = () => {
           <PersonIcon />
         </Avatar>
         {!isVoiceOnboardingDone && (
-          <Button onClick={handleOnboarding} size="small" >
+          <Button onClick={handleOnboarding} size="small">
             Voice registration
           </Button>
         )}
-        {isVoiceOnboardingDone && (hasBalance ? (
-          <Typography>1,000 USDC</Typography>
-        ) : (
-          <Button onClick={handleGetFaucet} size="small">
-            Get Test Token
-          </Button>
-        ))}
+        {isVoiceOnboardingDone &&
+          (data ? (
+            <Typography>{data.formatted} USDC</Typography>
+          ) : (
+            <Button onClick={handleGetFaucet} size="small">
+              Get Test Token
+            </Button>
+          ))}
       </Box>
-      <Button variant="contained" disabled={!hasBalance || !isVoiceOnboardingDone} fullWidth onClick={handleClickSend}>
+      <Button
+        variant="contained"
+        disabled={!data || !isVoiceOnboardingDone}
+        fullWidth
+        onClick={handleClickSend}
+      >
         Send
       </Button>
 
@@ -94,10 +116,10 @@ const MainScene = () => {
             gap: 1,
           }}
         >
-          {hasBalance && <TransactionItem type="receive" />}
+          {data && <TransactionItem type="receive" />}
           {Array.from(Array(numberOfSendItemTest).keys()).map((i) => (
-            <TransactionItem type="send" key={i}/>
-          )) }
+            <TransactionItem type="send" key={i} />
+          ))}
         </Box>
       </Box>
     </SceneLayout>
