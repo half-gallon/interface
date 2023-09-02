@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {MetaMaskSDK} from '@metamask/sdk';
 
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, Box, Button, Divider, Typography } from '@mui/material';
