@@ -1,21 +1,21 @@
 import { toast } from 'react-toastify';
 
-import { MetaMaskSDK } from '@metamask/sdk';
 import { MetaMaskInpageProvider } from '@metamask/providers';
+import { MetaMaskSDK } from '@metamask/sdk';
 import { WatchAssetParameters } from 'viem';
 import 'viem/window';
 import { Chain } from 'wagmi';
+
 import { delay } from './delay';
 
 interface handleWatchAssetProps {
   params: WatchAssetParameters;
-  chain: Chain
+  chain: Chain;
 }
 export function useAssetWatch() {
   const MMSDK = new MetaMaskSDK();
 
   const handleSwitchToChain = async (chain: Chain) => {
-
     const ethereum = MMSDK.getProvider();
     const { chainId: currentChainId } = ethereum;
 

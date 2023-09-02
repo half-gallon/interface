@@ -1,5 +1,6 @@
 export enum PAGE_STEPS {
   walletConnect,
+  aaCreate,
   registration,
   registration_pending,
   registration_done,

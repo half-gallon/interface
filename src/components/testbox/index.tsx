@@ -22,6 +22,9 @@ const TestBox = () => {
       <Button onClick={() => handleChange(PAGE_STEPS.walletConnect)}>
         walletConnect
       </Button>
+      <Button onClick={() => handleChange(PAGE_STEPS.aaCreate)}>
+        aaCreate
+      </Button>
       <Button onClick={() => handleChange(PAGE_STEPS.registration)}>
         registration
       </Button>

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Container, Paper } from '@mui/material';
 import { useAtomValue } from 'jotai';
 
+import AAcreateScene from '~/components/aaCrreateScene';
 import ConfirmScene from '~/components/confirmScene';
 import LoadingScene from '~/components/loadingScene';
 import LoadingDoneScene from '~/components/loadingScene/done';
@@ -34,6 +35,7 @@ export default function Home() {
           }}
         >
           {pageStep === PAGE_STEPS.walletConnect && <WalletConnectScene />}
+          {pageStep === PAGE_STEPS.aaCreate && <AAcreateScene />}
           {pageStep === PAGE_STEPS.registration && <RegistrationScene />}
           {pageStep === PAGE_STEPS.registration_pending && <LoadingScene />}
           {pageStep === PAGE_STEPS.registration_done && <LoadingDoneScene />}

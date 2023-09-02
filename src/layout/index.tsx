@@ -51,12 +51,11 @@ export const Description = styled(Typography)`
 `;
 
 export const Numbers = styled(Typography)`
-color: var(--primary, #4465DA);
-text-align: right;
-font-family: Darker Grotesque;
-font-size: 40px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-
+  color: var(--primary, #4465da);
+  text-align: right;
+  font-family: Darker Grotesque;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 `;
