@@ -1,5 +1,7 @@
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
@@ -8,6 +10,8 @@ import { arbitrum, goerli, mainnet, optimism, polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 import '../styles/globals.css';
+
+import theme from '~/styles/theme';
 
 const { chains, publicClient } = configureChains(
   [
@@ -36,7 +40,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains}>
         <QueryClientProvider client={wagmiConfig.queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
-            <Component {...pageProps} />
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
           </Hydrate>
         </QueryClientProvider>
       </RainbowKitProvider>
