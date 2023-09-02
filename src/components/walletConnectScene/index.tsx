@@ -16,13 +16,13 @@ const WalletConnectScene = () => {
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
 
-  useEffect(() => {
-    if (isConnected) {
-      setPageStep(PAGE_STEPS.main);
-    } else {
-      setPageStep(PAGE_STEPS.walletConnect);
-    }
-  }, [setPageStep, isConnected, isVoiceOnboardingDone]);
+  // useEffect(() => {
+  //   if (isConnected) {
+  //     setPageStep(PAGE_STEPS.main);
+  //   } else {
+  //     setPageStep(PAGE_STEPS.walletConnect);
+  //   }
+  // }, [setPageStep, isConnected, isVoiceOnboardingDone]);
 
   const handleClickConnect = () => {
     if (openConnectModal) {
@@ -37,6 +37,7 @@ const WalletConnectScene = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'relative',
       }}
     >
       <Typography
@@ -53,8 +54,10 @@ const WalletConnectScene = () => {
         fullWidth
         variant="contained"
         sx={{
-          // alignSelf: 'flex-end !important',
-          justifySelf: 'flex-end',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
         }}
         onClick={handleClickConnect}
         disabled={!openConnectModal}

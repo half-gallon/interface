@@ -1,9 +1,10 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Box, IconButton, Typography } from '@mui/material';
 import { useSetAtom } from 'jotai';
 
 import { pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import theme from '~/styles/theme';
 
 interface SceneHeaderProps {
   title: string;
@@ -30,17 +31,25 @@ const SceneHeader = ({ title, backTo }: SceneHeaderProps) => {
           onClick={handleClickBack}
           sx={{
             justifySelf: 'flex-start',
+            alignItems: 'baseline',
           }}
         >
-          <ArrowBackIcon />
+          <ArrowBackIosNewIcon
+            sx={{
+              fontSize: '12px',
+              color: theme.palette.primary.main,
+            }}
+          />
         </IconButton>
       )}
       <Typography
         sx={{
-          fontSize: '1rem',
+          fontSize: '24px',
+          fontWeight: '500',
           position: 'absolute',
           left: '50%',
           transform: 'translateX(-50%)',
+          color: theme.palette.primary.main,
         }}
       >
         {title}

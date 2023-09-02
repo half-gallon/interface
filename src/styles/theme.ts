@@ -1,9 +1,9 @@
 import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
-import { Roboto } from 'next/font/google';
+import { Darker_Grotesque } from 'next/font/google';
 
-export const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
+export const darkerGrotesque = Darker_Grotesque({
+  weight: ['300', '400', '500', '700', '800', '900'],
   subsets: ['latin'],
   display: 'swap',
 });
@@ -12,17 +12,38 @@ export const roboto = Roboto({
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      light: '#4465DA',
+      main: '#4465DA',
+      dark: '#4465DA',
     },
     secondary: {
-      main: '#19857b',
+      light: '#FF76C0',
+      main: '#FF76C0',
+      dark: '#FF76C0',
     },
     error: {
       main: red.A400,
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: darkerGrotesque.style.fontFamily,
+  },
+
+  components: {
+    // Name of the component
+    MuiButton: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          fontFeatureSettings: `'clig' off, 'liga' off`,
+          fontSize: '16px',
+          fontWeight: 700,
+          lineHeight: '26px' /* 152.941% */,
+          letterSpacing: '0.46px',
+        },
+      },
+    },
   },
 });
 

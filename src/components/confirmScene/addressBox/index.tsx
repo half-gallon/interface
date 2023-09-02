@@ -1,4 +1,5 @@
 import { Box, Paper, Typography } from '@mui/material';
+import { Label } from '~/layout';
 
 interface AddressBoxProps {
   label: string;
@@ -11,13 +12,17 @@ const AddressBox = ({ label, address }: AddressBoxProps) => {
         width: '100%',
       }}
     >
-      <Typography sx={{ mb: 1 }}>{label}</Typography>
+      <Label sx={{ mb: 1 }}>{label}</Label>
       <Paper
+        elevation={0}
         sx={{
           p: 2,
+          background: 'rgba(68, 101, 218, 0.10)',
         }}
       >
-        <Typography>{address}</Typography>
+        <Typography sx={{
+          color: '#7A7A7A'
+        }}>{address}</Typography>
       </Paper>
     </Box>
   );

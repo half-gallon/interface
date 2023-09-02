@@ -3,15 +3,16 @@ import { Box, Button, Typography } from '@mui/material';
 import { useSetAtom } from 'jotai';
 
 import { useInterval } from '~/hooks/useInterval';
-import { SceneLayout } from '~/layout';
+import { Heading, SceneLayout } from '~/layout';
 import { pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import theme from '~/styles/theme';
 
 const LoadingFailedScene = () => {
   const setPageStep = useSetAtom(pageStepAtom);
-  
+
   useInterval(() => {
-    setPageStep(PAGE_STEPS.main);    
+    setPageStep(PAGE_STEPS.main);
   }, 2_000);
 
   return (
@@ -27,16 +28,18 @@ const LoadingFailedScene = () => {
         <CheckCircleOutlineIcon
           sx={{
             fontSize: '56px',
+            color: theme.palette.error.main,
           }}
         />
       </Box>
-      <Typography
+      <Heading
         sx={{
           mt: 4,
+          color: theme.palette.error.main,
         }}
       >
         Voice Authentication Failed
-      </Typography>
+      </Heading>
     </SceneLayout>
   );
 };

@@ -16,7 +16,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import SceneHeader from '../sceneHeader';
 
 import { useRecord } from '~/hooks/useRecord';
-import { SceneLayout } from '~/layout';
+import { Description, Heading, SceneLayout } from '~/layout';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
 
@@ -73,27 +73,33 @@ const RegistrationScene = () => {
   }, [pageStep]);
 
   return (
-    <SceneLayout>
+    <SceneLayout
+      sx={{
+        position: 'relative',
+      }}
+    >
       <SceneHeader title={sceneTitle} backTo={backTo} />
 
-      <Typography
-        sx={{
-          fontSize: '1.5rem',
-        }}
-      >
+      <Heading sx={{ mb: '16px' }}>
         Please read the sentence below and record your voice.
-      </Typography>
+      </Heading>
+      <Description sx={{ mb: '56px' }}>
+        Train your voice in silent location for security
+      </Description>
 
       <Paper
         sx={{
           p: 4,
+          border: '1.5px solid var(--primary, #4465DA)',
         }}
       >
         <Paper
           elevation={0}
           sx={{
             p: 2,
-            background: (theme) => theme.palette.grey[100],
+            border: '1px solid #FF76C0',
+            background: 'rgba(255, 118, 192, 0.10)',
+            mb: '24px',
           }}
         >
           The quick brown fox jumps over the lazy dog
@@ -128,6 +134,12 @@ const RegistrationScene = () => {
         fullWidth
         onClick={handleSubmit}
         disabled={!audio}
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
       >
         Submit Recording
       </Button>
