@@ -19,6 +19,8 @@ import { useRecord } from '~/hooks/useRecord';
 import { Description, Heading, SceneLayout } from '~/layout';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import { uploadFile } from '~/api';
+import { toast } from 'react-toastify';
 
 const RegistrationScene = () => {
   const {
@@ -32,19 +34,27 @@ const RegistrationScene = () => {
   const [pageStep, setPageStep] = useAtom(pageStepAtom);
   const setIsVoiceOnboardingDone = useSetAtom(isVoiceOnboardingDoneAtom);
 
-  const handleSubmit = () => {
-    // todo progress
-    setPageStep(PAGE_STEPS.registration_pending);
-    setIsVoiceOnboardingDone(true);
-    return;
-
-    if (pageStep === PAGE_STEPS.registration) {
-      setIsVoiceOnboardingDone(true);
+  const handleSubmit = async () => {
+    try {
+      // if(wavBlob !==undefined) {
+      //   await uploadFile(wavBlob);
+      // }
+      // todo progress
       setPageStep(PAGE_STEPS.registration_pending);
-    }
-
-    if (pageStep === PAGE_STEPS.voiceVerification) {
-      setPageStep(PAGE_STEPS.confirm);
+      setIsVoiceOnboardingDone(true);
+      return;
+      
+      if (pageStep === PAGE_STEPS.registration) {
+        setIsVoiceOnboardingDone(true);
+        setPageStep(PAGE_STEPS.registration_pending);
+      }
+      
+      if (pageStep === PAGE_STEPS.voiceVerification) {
+        setPageStep(PAGE_STEPS.confirm);
+      }
+    } catch (error: any) {
+      toast.error('Upload failed', error.message);
+      console.error(error);
     }
   };
 
