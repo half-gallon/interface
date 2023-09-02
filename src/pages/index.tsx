@@ -10,12 +10,17 @@ import LoadingScene from '~/components/loadingScene';
 import LoadingDoneScene from '~/components/loadingScene/done';
 import LoadingFailedScene from '~/components/loadingScene/failed';
 import MainScene from '~/components/mainScnen';
-import RegistrationScene from '~/components/registrationScene';
 import SendScene from '~/components/sendScene';
 import TestBox from '~/components/testbox';
 import WalletConnectScene from '~/components/walletConnectScene';
 import { isVoiceOnboardingDoneAtom, pageStepAtom } from '~/state';
 import { PAGE_STEPS } from '~/state/types';
+import dynamic from 'next/dynamic'
+
+const RegistrationScene = dynamic(() => import('~/components/registrationScene'), {
+    ssr: false
+})
+
 
 export default function Home() {
   const pageStep = useAtomValue(pageStepAtom);

@@ -1,5 +1,36 @@
-import { Address } from 'viem';
-import { arbitrumGoerli, goerli, optimismGoerli } from 'wagmi/chains';
+import { Address, Chain } from 'viem';
+import {
+  goerli,
+  optimismGoerli,
+  lineaTestnet,
+  taikoTestnetSepolia,
+} from 'wagmi/chains';
+
+export const CHAIN = [
+  goerli,
+  optimismGoerli,
+  lineaTestnet,
+  taikoTestnetSepolia,
+];
+
+export const anvil = {
+  id: 31337,
+  name: 'Mitosis',
+  network: 'mitosis',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'gmito',
+    symbol: 'MITO',
+  },
+  rpcUrls: {
+    public: { http: ['http://192.168.0.105:8545'] },
+    default: { http: ['http://192.168.0.105:8545'] },
+  },
+  
+  contracts: {},
+} as const satisfies Chain;
+
+export const LOCAL_CHAIN = [anvil];
 
 export const TOKEN: {
   [key in number]: Address;

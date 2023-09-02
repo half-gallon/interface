@@ -8,19 +8,15 @@ import { RainbowKitProvider, getDefaultWallets } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 import type { AppProps } from 'next/app';
 import { WagmiConfig, configureChains, createConfig } from 'wagmi';
-import { arbitrum, goerli, mainnet, optimism, polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 import '../styles/globals.css';
 
 import theme from '~/styles/theme';
+import { CHAIN } from '~/constants';
 
 const { chains, publicClient } = configureChains(
-  [
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-      ? [goerli]
-      : [mainnet, polygon, optimism, arbitrum]),
-  ],
+  [...CHAIN],
   [publicProvider()],
 );
 
