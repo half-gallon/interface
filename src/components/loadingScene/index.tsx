@@ -28,21 +28,31 @@ const LoadingScene = () => {
     watch: true,
   });
 
-
-
-  useEffect(() => {
-    if(data === true) {
-      
-      if(pageStep === PAGE_STEPS.voiceVerification_pending) {
-        setPageStep(PAGE_STEPS.registration_done);
-        setIsVoiceVerified(true);
-      }
-      if(pageStep === PAGE_STEPS.registration_pending) {
-        setPageStep(PAGE_STEPS.registration_done);
-        setIsVoiceOnboardingDone(true);
-      }
+  useInterval(() => {
+    if(pageStep === PAGE_STEPS.voiceVerification_pending) {
+      setPageStep(PAGE_STEPS.voiceVerification_done);
+      setIsVoiceVerified(true);
     }
-  }, [data, setPageStep, setIsVoiceOnboardingDone,setIsVoiceVerified, pageStep])
+    if(pageStep === PAGE_STEPS.registration_pending) {
+      setPageStep(PAGE_STEPS.registration_done);
+      setIsVoiceOnboardingDone(true);
+    }
+  }, 4000);
+
+
+  // useEffect(() => {
+  //   if(data === true) {
+      
+  //     if(pageStep === PAGE_STEPS.voiceVerification_pending) {
+  //       setPageStep(PAGE_STEPS.registration_done);
+  //       setIsVoiceVerified(true);
+  //     }
+  //     if(pageStep === PAGE_STEPS.registration_pending) {
+  //       setPageStep(PAGE_STEPS.registration_done);
+  //       setIsVoiceOnboardingDone(true);
+  //     }
+  //   }
+  // }, [data, setPageStep, setIsVoiceOnboardingDone,setIsVoiceVerified, pageStep])
 
 
   return (

@@ -13,7 +13,10 @@ interface handleWatchAssetProps {
   chain: Chain;
 }
 export function useAssetWatch() {
-  const MMSDK = new MetaMaskSDK();
+  const MMSDK = new MetaMaskSDK({
+    dappMetadata: {},
+    injectProvider:true,
+  });
 
   const handleSwitchToChain = async (chain: Chain) => {
     const ethereum = MMSDK.getProvider();
@@ -61,6 +64,8 @@ export function useAssetWatch() {
       const ethereum = MMSDK.getProvider();
       const { chainId: currentChainId } = ethereum;
 
+      console.info(MMSDK, ethereum);
+
       if (Number(currentChainId) == chain.id) {
         await ethereum
           .request({
@@ -71,7 +76,7 @@ export function useAssetWatch() {
             toast.error(error.message);
           });
       } else {
-        toast.info('Please switch to Mitosis network');
+        toast.info(`Please switch network, ${currentChainId}, ${chain.id}`);
       }
     });
   };

@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { MetaMaskSDK } from '@metamask/sdk';
 import PersonIcon from '@mui/icons-material/Person';
-import { Avatar, Box, Button, Divider, Paper, Typography } from '@mui/material';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { Avatar, Box, Button, CircularProgress, Divider, Paper, Typography } from '@mui/material';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { goerli } from 'wagmi/chains';
 
 import TransactionItem from './transactionItem';
@@ -12,6 +12,7 @@ import { TOKEN } from '~/constants';
 import { useSelectedAssetBalance } from '~/hooks/useSelectedAssetBalance';
 import { Heading, SceneLayout, SubHeading } from '~/layout';
 import {
+  isTokenClaimedAtom,
   isVoiceOnboardingDoneAtom,
   numberOfSendItemTestAtom,
   pageStepAtom,
@@ -19,6 +20,7 @@ import {
 import { PAGE_STEPS } from '~/state/types';
 import { useAccount } from 'wagmi';
 import { useDisconnect } from 'wagmi'
+import { delay } from '~/hooks/delay';
 
 const MainScene = () => {
   const {disconnect} = useDisconnect();
@@ -26,6 +28,11 @@ const MainScene = () => {
   const isVoiceOnboardingDone = useAtomValue(isVoiceOnboardingDoneAtom);
   const setPageStep = useSetAtom(pageStepAtom);
   const numberOfSendItemTest = useAtomValue(numberOfSendItemTestAtom);
+
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isTokenClaimed, setIsTokenClaimed] = useAtom(isTokenClaimedAtom);
   // const { handleGetUSDC } = useGetUSDC({});
 
   const { data } = useSelectedAssetBalance({
@@ -33,8 +40,12 @@ const MainScene = () => {
     token: TOKEN[goerli.id],
   });
 
-  const handleGetFaucet = () => {
+  const handleGetFaucet = async () => {
     // handleGetUSDC();
+    setIsLoading(true);
+    await delay(1000);
+    setIsTokenClaimed(true);
+    setIsLoading(false);
   };
 
   const handleOnboarding = () => {
@@ -91,8 +102,10 @@ const MainScene = () => {
         sx={{
           mt: '12px',
         }}
+        disabled={isTokenClaimed || isLoading}
       >
         get test token
+        {isLoading && <CircularProgress size={12} sx={{ml: 2}}/>}
       </Button>
 
       <Button
@@ -147,8 +160,9 @@ const MainScene = () => {
             flexDirection: 'column',
           }}
         >
-          <TransactionItem type="receive" />
-          <TransactionItem type="send" />
+          {isTokenClaimed && <TransactionItem type="receive" />}
+          {numberOfSendItemTest > 0 && <TransactionItem type="send" />}
+          {/* <TransactionItem type="send" />  */}
         </Box>
       </Box>
     </SceneLayout>

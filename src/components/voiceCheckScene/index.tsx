@@ -42,14 +42,7 @@ const VoiceCheckScene = () => {
   const { mutate, isLoading } = useMutation({
     mutationFn: uploadFile,
  
-    onError(error, variables, context) {
-      toast.error('Upload failed', (error as any).message);
-    },
-    onSuccess(data) {
-      toast.success('Upload success');
-      const proof = (data as any).proof;
-      setProof(proof);
-
+    onMutate(variables) {
       if (pageStep === PAGE_STEPS.registration) {
         setIsVoiceOnboardingDone(true);
         setPageStep(PAGE_STEPS.registration_pending);
@@ -60,6 +53,24 @@ const VoiceCheckScene = () => {
         setPageStep(PAGE_STEPS.voiceVerification_pending);
       }
     },
+    // onError(error, variables, context) {
+    //   toast.error('Upload failed', (error as any).message);
+    // },
+    // onSuccess(data) {
+    //   toast.success('Upload success');
+    //   const proof = (data as any).proof;
+    //   setProof(proof);
+
+    //   if (pageStep === PAGE_STEPS.registration) {
+    //     setIsVoiceOnboardingDone(true);
+    //     setPageStep(PAGE_STEPS.registration_pending);
+    //   }
+      
+    //   if (pageStep === PAGE_STEPS.voiceVerification) {
+    //     setIsVoiceVerified(true);
+    //     setPageStep(PAGE_STEPS.voiceVerification_pending);
+    //   }
+    // },
   })
 
   const handleSubmit = async () => {
