@@ -24,7 +24,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import Image from 'next/image';
 
 import SceneHeader from '../sceneHeader';
-
+import AddIcon from '@mui/icons-material/Add';
 import AccountItem from './accountItem';
 import { Label, SceneLayout, SubHeading } from '~/layout';
 import { isVoiceVerifiedAtom, pageStepAtom, sendAmountAtom, toAddressAtom } from '~/state';
@@ -32,7 +32,8 @@ import { PAGE_STEPS } from '~/state/types';
 import theme from '~/styles/theme';
 import { Address } from 'viem';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
-import { TOKEN } from '~/constants';
+import { TOKEN, anvil } from '~/constants';
+// import { useAssetWatch } from '~/hooks/useAssetWatch';
 
 const SendScene = () => {
   const {address} = useAccount();
@@ -41,6 +42,8 @@ const SendScene = () => {
   const setPageStep = useSetAtom(pageStepAtom);
   const setIsVoiceVerified = useSetAtom(isVoiceVerifiedAtom);
   const {chain} = useNetwork();
+
+  // const { handleWatchAsset} = useAssetWatch()
 
   const handleChangeInput = (e:  React.ChangeEvent<HTMLInputElement>) => {
     setSendToAddress(e.target.value as Address);
@@ -63,6 +66,21 @@ const SendScene = () => {
   const handleClickConfirmRequest = () => {
     setPageStep(PAGE_STEPS.confirm);
   };
+
+  // const handleClickAdd = () => {
+  //   handleWatchAsset({
+  //     params:{
+  //       type: 'ERC20',
+  //       options: {
+
+  //         address: '0x5FbDB2315678afecb367f032d93F642f64180aa3' as Address,
+  //         decimals: 18,
+  //         symbol: 'YAHO',
+  //       }
+  //   },
+  //     chain: anvil
+  //   });
+  // }
 
   const { data } = useBalance({
     address,
@@ -141,7 +159,7 @@ const SendScene = () => {
             background: 'rgba(255, 255, 255, 0.20)',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between' }}>
             <Box>
               <SubHeading>$YAHO</SubHeading>
               {/* todo balance */}
@@ -155,6 +173,9 @@ const SendScene = () => {
                 {data? data.formatted : '0'} YAHO available
               </Typography>
             </Box>
+          {/* <IconButton onClick={handleClickAdd}>
+                <AddIcon />
+          </IconButton> */}
           </Box>
         </Paper>
       </Box>

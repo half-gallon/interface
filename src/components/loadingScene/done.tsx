@@ -1,6 +1,6 @@
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Box, Button, Typography } from '@mui/material';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 
 import { useInterval } from '~/hooks/useInterval';
 import { Heading, SceneLayout } from '~/layout';
@@ -9,10 +9,17 @@ import { PAGE_STEPS } from '~/state/types';
 import theme from '~/styles/theme';
 
 const LoadingDoneScene = () => {
-  const setPageStep = useSetAtom(pageStepAtom);
+  const [pageStep, setPageStep] = useAtom(pageStepAtom);
 
   useInterval(() => {
-    setPageStep(PAGE_STEPS.main);
+    if(pageStep === PAGE_STEPS.registration_done) {
+      setPageStep(PAGE_STEPS.main);
+      return;
+    }
+    if(PAGE_STEPS.voiceVerification_done) {
+      setPageStep(PAGE_STEPS.confirm);
+      return;
+    }
   }, 2_000);
 
   return (
